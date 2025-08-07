@@ -1,6 +1,6 @@
 # Abstract
 
-This study proposes a multi-judge (ensemble) system
+[This study](spyware-detection.pdf) proposes a multi-judge (ensemble) system
 for static detection of spyware in Windows executable files.
 The system combines six diverse classifiers (Naive Bayes, SVM, KNN, Random
 Forest, XGBoost) and deep learning models (1D and 2D CNNs),
