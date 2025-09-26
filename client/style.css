@@ -1,0 +1,87 @@
+@font-face {
+    font-family: 'RedHatDisplay-Regular';
+    src: url('./resources/RedHatDisplay-Regular.ttf') format('truetype');
+}
+
+body {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  font-family: 'RedHatDisplay-Regular';
+  text-align: center;
+  padding: 40px;
+}
+
+input, button {
+  padding: 10px;
+  margin: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #333;
+  color: white;
+}
+
+#header {
+    margin-top: 28vh;
+}
+
+button:hover {
+  background-color: #444;
+  cursor: pointer;
+}
+
+#verdict {
+  font-size: 24px;
+  color: white;
+  margin-top: 8vh;
+}
+
+.judges-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.judge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.judge-label {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(#444 0%, #222 0%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  position: relative;
+  transition: background 0.3s linear;
+  font-weight: bold;
+}
+
+.circle::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-color: #1e1e1e;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.circle span {
+  position: relative;
+  z-index: 1;
+}
