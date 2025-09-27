@@ -4,4 +4,4 @@
 
 ### Run the project
 To run the project use `python3 server.py` inside `server` directory. 
-Required libraries: `uvicorn`, `pytorch`, `numpy`, `pandas`, `fastapi`, `sklearn`, `xgboost`, `pefile`.
+Required libraries: `uvicorn`, `torch`, `numpy`, `pandas`, `fastapi`, `scikit-learn`, `xgboost`, `pefile`, `python-multipart`, `matplotlib`.
