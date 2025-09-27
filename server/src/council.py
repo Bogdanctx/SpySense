@@ -64,4 +64,4 @@ class Council:
         weighted_vote = sum(results[j] * self.weights[j] for j in self.judges)
         verdict = 1 if weighted_vote >= 0.35 else 0
 
-        return {"verdict": verdict, "details": results}
+        return {"verdict": verdict, "confidence_score": weighted_vote, "details": results}

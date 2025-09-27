@@ -49,10 +49,10 @@ function createJudgeCircle(label, percent) {
 async function scan() {
     const input = document.getElementById('fileInput');
     const file = input.files[0];
-    const verdictDiv = document.getElementById('verdict');
+    const statusDiv = document.getElementById('status');
     const container = document.getElementById('judgesContainer');
 
-    verdictDiv.textContent = '';
+    statusDiv.textContent = '';
     container.innerHTML = '';
 
     if (!file) {
@@ -63,7 +63,7 @@ async function scan() {
     const formData = new FormData();
     formData.append('file', file);
 
-    verdictDiv.textContent = 'Scanning...';
+    statusDiv.textContent = 'Scanning...';
 
     try {
         const res = await fetch('http://127.0.0.1:8000/scan', {
@@ -73,8 +73,18 @@ async function scan() {
 
         const json = await res.json();
 
-        verdictDiv.textContent = 'Scanning finished';
+        console.log(json.verdict);
 
+        statusDiv.textContent = 'Scanning finished';
+        const verdictDiv = document.getElementById('finalVerdict');
+        ensemble_verdict = json.verdict === 1 ? 'Spyware' : 'Not Spyware';
+        confidence_score = json.confidence_score;
+
+        if (json.verdict === 0) {
+            confidence_score = 1 - confidence_score; // invert for not spyware
+        }
+
+        verdictDiv.textContent = `Final Verdict: ${ensemble_verdict} (Confidence Score: ${(confidence_score * 100).toFixed(2)}%)`;
 
         // Judges
         const scores = Object.values(json.details || {});
