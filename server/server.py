@@ -3,7 +3,6 @@ import uvicorn
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from src.feature_scheme import PE
 from src.council import Council
 
 app = FastAPI()
@@ -22,7 +21,7 @@ app.add_middleware(
 async def scan_file(file: UploadFile = File(...)):
     content = await file.read()
 
-    with tempfile.NamedTemporaryFile(delete = False, suffix = ".exe") as tmp:
+    with tempfile.NamedTemporaryFile(delete = False) as tmp:
         tmp.write(content)
         tmp.flush()
         tmp_path = tmp.name

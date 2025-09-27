@@ -57,7 +57,7 @@ class Council:
                         bytes_data += b'\x00' * (view_len - len(bytes_data))
 
                 feature = torch.frombuffer(bytes_data, dtype=torch.uint8).unsqueeze(0)
-                feature = feature.to("cuda")
+                feature = feature.to(JudgeByteCNN.CONFIG["DEVICE"])
 
             results[name] = judge.predict_proba(feature)[0][1] # probability of being malware
 

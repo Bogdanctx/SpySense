@@ -12,6 +12,9 @@ class PE:
         self.path = path
         try:
             self.pe = pefile.PE(path, fast_load=False)
+
+            if self.pe.FILE_HEADER.Characteristics & 0x2000:  # IMAGE_FILE_DLL
+                raise ValueError("File is a DLL, not an EXE")
         except Exception as e:
             raise ValueError(f"Failed to parse PE: {e}")
 

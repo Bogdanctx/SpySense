@@ -115,7 +115,6 @@ class JudgeByteCNN(torch.nn.Module, Judge):
             print(f"Learning Rate: {scheduler.get_last_lr()[0]}")
             start = time.time()
 
-            scaler = torch.amp.GradScaler(self.CONFIG["DEVICE"])
             total_loss = 0
             correct = 0
             total = 0
@@ -125,13 +124,10 @@ class JudgeByteCNN(torch.nn.Module, Judge):
                 y = y.to(self.CONFIG["DEVICE"])
 
                 optimizer.zero_grad() # set gradient to 0
-                with torch.amp.autocast("cuda"):
-                    outputs = self(X)
-                    loss = self.loss_function(outputs, y)
-
-                scaler.scale(loss).backward() # backpropagation
-                scaler.step(optimizer) # update weights
-                scaler.update() # update scaler for next iteration
+                outputs = self(X)
+                loss = self.loss_function(outputs, y)
+                loss.backward() # backpropagation
+                optimizer.step() # update weights
                 total_loss += loss.item()
 
                 _, preds = torch.max(outputs, 1)
@@ -178,7 +174,7 @@ class JudgeByteCNN(torch.nn.Module, Judge):
     # X should be a tensor
     def predict_proba(self, X):
         self.to(self.CONFIG["DEVICE"])
-        with torch.no_grad(), torch.amp.autocast(self.CONFIG["DEVICE"]):
+        with torch.no_grad():
             X = X.to(self.CONFIG["DEVICE"])
             outputs = self(X)
             probs = torch.softmax(outputs, dim=1)
@@ -194,7 +190,7 @@ class JudgeByteCNN(torch.nn.Module, Judge):
             X = X.to(self.CONFIG["DEVICE"])
             y = y.to(self.CONFIG["DEVICE"])
 
-            with torch.no_grad(), torch.amp.autocast("cuda"):
+            with torch.no_grad():
                 outputs = self(X)
                 loss = self.loss_function(outputs, y)
             
